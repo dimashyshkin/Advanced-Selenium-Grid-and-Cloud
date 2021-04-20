@@ -34,18 +34,17 @@ public class SauceLabsTestListener extends TestListenerAdapter {
 		super.onTestFailure(result);
 		if (sauce) {
 			sauceREST.jobFailed(sessionId);
-		}
-		Throwable throwable = result.getThrowable();
-		String message = throwable.getMessage();
-		StackTraceElement[] stackTrace = throwable.getStackTrace();
-		String link = "SL job link: https://app.saucelabs.com/tests/" + sessionId;
-		String sauceTestName = result.getTestContext().getName() + " | " + result.getName();
+			
+			Throwable throwable = result.getThrowable();
+			String message = throwable.getMessage();
+			StackTraceElement[] stackTrace = throwable.getStackTrace();
+			String link = "SL job link: https://app.saucelabs.com/tests/" + sessionId;
+			String sauceTestName = result.getTestContext().getName() + " | " + result.getName();
 
-		String newMessage = sauceTestName + "\n" + link + "\n" + message;
-		Throwable newThrowable = new Throwable(newMessage, throwable);
-		newThrowable.setStackTrace(stackTrace);
-		result.setThrowable(newThrowable);
-
+			String newMessage = sauceTestName + "\n" + link + "\n" + message;
+			Throwable newThrowable = new Throwable(newMessage, throwable);
+			newThrowable.setStackTrace(stackTrace);
+			result.setThrowable(newThrowable);
+		}	
 	}
-
 }
